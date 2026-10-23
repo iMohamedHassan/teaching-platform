@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for teaching-platform on 2026-10-23T19:00:26Z
+# fly.toml app configuration file generated for teaching-platform-acnmoq on 2026-10-23T19:10:58Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'teaching-platform'
+app = 'teaching-platform-acnmoq'
 primary_region = 'ams'
 
 [build]

@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: teaching-platform
+    runtime: node
+    plan: starter          # أرخص خطة بتفضل شغالة من غير ما تنام
+    region: frankfurt
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: APP_URL
+        sync: false        # حطه من لوحة Render بعد ما تعرف الدومين
+      - key: BRAND_NAME
+        sync: false
+      - key: WHATSAPP_NUMBER
+        sync: false
+      - key: MONGODB_URI
+        sync: false        # رابط MongoDB Atlas
+      - key: JWT_ACCESS_SECRET
+        generateValue: true

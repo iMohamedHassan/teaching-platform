@@ -1,0 +1,152 @@
+/* ===== تصميم المنصة: سبورة (داكن) / ورق (فاتح) ===== */
+:root {
+  --bg:#F2F5F0; --surface:#FFFFFF; --surface-2:#E8EDE6; --ink:#14231E; --muted:#58695F; --line:#D3DCD4;
+  --primary:#1F3B34; --on-primary:#F3F0E4; --chalk:#E8B931; --blue:#2F6F9F; --danger:#B3382C; --ok:#26734B;
+  --board:#1F3B34; --board-ink:#F3F0E4; --r:10px;
+  --display:'Reem Kufi','IBM Plex Sans Arabic',Tahoma,sans-serif;
+  --body:'IBM Plex Sans Arabic',Tahoma,'Segoe UI',sans-serif;
+  color-scheme: light;
+}
+:root[data-theme=dark] {
+  --bg:#0E1A17; --surface:#15251F; --surface-2:#1C302A; --ink:#ECE9DD; --muted:#9AADA5; --line:#2A3F39;
+  --primary:#E8B931; --on-primary:#17211D; --chalk:#E8B931; --blue:#7DB3DE; --danger:#EC7B70; --ok:#5CBB87;
+  --board:#13302A; --board-ink:#ECE9DD; color-scheme: dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7}
+h1,h2,h3,h4,.display{font-family:var(--display);font-weight:600;line-height:1.35;margin:0}
+h1{font-size:clamp(2rem,5vw,3.2rem)} h2{font-size:1.5rem} h3{font-size:1.15rem}
+p{margin:0 0 .75rem} a{color:var(--blue)} code{font-family:ui-monospace,Consolas,monospace;font-size:.85em;background:var(--surface-2);padding:.1em .4em;border-radius:5px;direction:ltr;unicode-bidi:embed}
+img{max-width:100%}
+:focus-visible{outline:3px solid var(--chalk);outline-offset:2px}
+.container{width:min(1120px,100% - 2rem);margin-inline:auto}
+.muted{color:var(--muted)} .small{font-size:.875rem} .center{text-align:center} .ltr{direction:ltr;text-align:left}
+.row{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap} .grow{flex:1}
+.stack>*+*{margin-top:1rem}
+
+/* ----- أزرار ----- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.55rem 1.15rem;border-radius:var(--r);border:1.5px solid var(--primary);background:var(--primary);color:var(--on-primary);font-family:inherit;font-weight:500;font-size:.95rem;cursor:pointer;text-decoration:none;line-height:1.4}
+.btn:hover{filter:brightness(1.08)} .btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)} .btn.ghost:hover{border-color:var(--ink);filter:none}
+.btn.danger{background:transparent;color:var(--danger);border-color:var(--danger)}
+.btn.sm{padding:.3rem .8rem;font-size:.85rem} .btn.block{width:100%}
+.icon-btn{width:2.4rem;height:2.4rem;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font-size:1.1rem;display:inline-grid;place-items:center}
+
+/* ----- حقول ----- */
+.field{display:block;margin-bottom:1rem} .field>span{display:block;font-size:.9rem;font-weight:500;margin-bottom:.3rem}
+.field small{display:block;color:var(--muted);margin-top:.25rem}
+input,select,textarea{width:100%;padding:.6rem .8rem;border:1.5px solid var(--line);border-radius:var(--r);background:var(--surface);color:var(--ink);font-family:inherit;font-size:1rem}
+input[type=checkbox]{width:auto} textarea{min-height:5.5rem;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--chalk) 45%,transparent)}
+.check{display:flex;align-items:center;gap:.5rem;cursor:pointer;padding:.25rem 0}
+.checks{border:1.5px solid var(--line);border-radius:var(--r);padding:.5rem .8rem;max-height:13rem;overflow:auto;background:var(--surface)}
+.pw{position:relative} .pw button{position:absolute;inset-inline-start:.4rem;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--muted);cursor:pointer;font-family:inherit;font-size:.8rem}
+.pw input{padding-inline-start:3.6rem}
+.form-error{color:var(--danger);font-size:.92rem;min-height:1.4em;margin:.25rem 0 .5rem}
+
+/* ----- بطاقات وشارات ----- */
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:1.25rem}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.badge{display:inline-block;padding:.05rem .6rem;border-radius:99px;font-size:.78rem;font-weight:500;background:var(--surface-2);color:var(--muted);white-space:nowrap}
+.badge.ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.badge.off{background:color-mix(in srgb,var(--danger) 14%,transparent);color:var(--danger)}
+.badge.gold{background:color-mix(in srgb,var(--chalk) 30%,transparent);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.chip{padding:.2rem .75rem;border-radius:99px;border:1.5px solid currentColor;font-size:.85rem;background:transparent;color:inherit;font-family:inherit;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--chalk);color:#17211D;border-color:var(--chalk)}
+.empty{padding:2.5rem 1rem;text-align:center;color:var(--muted);border:1.5px dashed var(--line);border-radius:14px}
+
+/* ----- الشريط العلوي للصفحات العامة ----- */
+.topbar{display:flex;align-items:center;gap:.75rem;padding:.8rem 1.25rem;border-bottom:1.5px solid var(--line);background:var(--surface)}
+.topbar nav{display:flex;gap:.5rem;align-items:center;margin-inline-start:auto}
+.brand{font-family:var(--display);font-weight:700;font-size:1.4rem;color:var(--ink);text-decoration:none}
+
+/* ----- السبورة (الهيرو) ----- */
+.board{background:radial-gradient(ellipse at 20% 0%,color-mix(in srgb,var(--board-ink) 9%,transparent),transparent 60%),var(--board);color:var(--board-ink);padding:clamp(2.5rem,7vw,5rem) 1rem}
+.board h1{text-decoration:underline;text-decoration-color:var(--chalk);text-decoration-thickness:.09em;text-underline-offset:.28em}
+.board p{max-width:42ch;opacity:.9;font-size:1.1rem}
+.board .chip{color:var(--board-ink)}
+.section{padding:2rem 0} .section-title{margin-bottom:1rem}
+
+/* ----- بطاقة مدرس ----- */
+.teacher-card{display:flex;gap:1rem;align-items:flex-start;text-decoration:none;color:inherit;transition:border-color .15s}
+.teacher-card:hover{border-color:var(--primary)}
+.avatar{width:64px;height:64px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--chalk);color:#17211D;font-family:var(--display);font-size:1.7rem;font-weight:700;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+
+/* ----- باقات ----- */
+.pkg{display:flex;flex-direction:column;gap:.6rem}
+.price{font-family:var(--display);font-size:2rem;font-weight:700}
+.price small{font-size:.9rem;font-weight:400;color:var(--muted);font-family:var(--body)}
+
+/* ----- تسجيل الدخول ----- */
+.auth-wrap{min-height:100vh;display:grid;place-items:center;padding:1.25rem;background:var(--bg)}
+.auth-card{width:min(460px,100%)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:1.25rem}
+.tabs button{padding:.65rem;border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:1rem;font-weight:500;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--primary);color:var(--on-primary)}
+
+/* ----- هيكل لوحة الطالب والأدمن ----- */
+.shell{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+.side{background:var(--surface);border-inline-end:1.5px solid var(--line);padding:1rem;display:flex;flex-direction:column;gap:1rem;position:sticky;top:0;height:100vh;overflow-y:auto}
+.side .who{font-size:.9rem;color:var(--muted);margin-top:.35rem}
+.menu{display:flex;flex-direction:column;gap:.3rem;flex:1}
+.menu a{display:block;padding:.6rem .9rem;border-radius:var(--r);color:var(--ink);text-decoration:none;font-weight:500}
+.menu a:hover{background:var(--surface-2)}
+.menu a[aria-current=page]{background:var(--primary);color:var(--on-primary)}
+.main{min-width:0}
+.bar{display:flex;align-items:center;gap:.75rem;padding:.8rem 1.25rem;border-bottom:1.5px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:5}
+.view{padding:1.5rem 1.25rem 4rem;max-width:1200px}
+.only-mobile{display:none}
+.welcome{background:var(--board);color:var(--board-ink);border-radius:14px;padding:1.4rem 1.5rem;margin-bottom:1.5rem}
+.welcome h2{text-decoration:underline;text-decoration-color:var(--chalk);text-decoration-thickness:.08em;text-underline-offset:.28em;margin-bottom:.5rem}
+.welcome p{margin:0;opacity:.88}
+
+/* ----- محاضرات ----- */
+.course-card{display:flex;flex-direction:column;gap:.5rem;text-decoration:none;color:inherit;border-inline-start:6px solid var(--chalk)}
+.course-card.locked{border-inline-start-color:var(--line)}
+.course-card:hover{border-color:var(--primary)}
+.lec{display:flex;align-items:center;gap:1rem;padding:.9rem 1rem;border-bottom:1.5px solid var(--line);text-decoration:none;color:inherit;background:var(--surface)}
+.lec:first-child{border-top-left-radius:14px;border-top-right-radius:14px} .lec:last-child{border-bottom:0;border-bottom-left-radius:14px;border-bottom-right-radius:14px}
+.lec:hover{background:var(--surface-2)} .lec.locked{opacity:.7}
+.lec .n{font-family:var(--display);font-size:1.3rem;width:2rem;text-align:center;color:var(--muted)}
+.list{border:1.5px solid var(--line);border-radius:14px;overflow:hidden}
+.player{position:relative;aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.player:fullscreen{border-radius:0}
+.wm{position:absolute;z-index:2;pointer-events:none;color:#fff;opacity:.38;font-size:.95rem;font-weight:600;text-shadow:0 0 4px #000;transition:top 1.2s,inset-inline-start 1.2s;white-space:nowrap;direction:ltr}
+
+/* ----- جداول ----- */
+.toolbar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+.toolbar input[type=search]{flex:1;min-width:180px} .toolbar select{width:auto;min-width:150px}
+.table-wrap{overflow-x:auto;border:1.5px solid var(--line);border-radius:14px;background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+th,td{padding:.65rem .9rem;text-align:start;border-bottom:1.5px solid var(--line);vertical-align:middle}
+th{background:var(--surface-2);font-weight:600;white-space:nowrap;position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+td.act{white-space:nowrap;text-align:end}
+.stats{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.stat{padding:1rem 1.1rem;border-radius:14px;background:var(--surface);border:1.5px solid var(--line);border-inline-start:6px solid var(--chalk)}
+.stat b{display:block;font-family:var(--display);font-size:2rem;line-height:1.2}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:.35rem 1.25rem} .kv dt{color:var(--muted)} .kv dd{margin:0}
+
+/* ----- نافذة منبثقة وتنبيهات ----- */
+dialog.modal{border:0;border-radius:16px;padding:0;width:min(640px,calc(100% - 1.5rem));max-height:92vh;background:var(--surface);color:var(--ink)}
+dialog.modal::backdrop{background:rgba(8,16,13,.6)}
+.modal-h{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1.5px solid var(--line)}
+.modal-b{padding:1.25rem;overflow-y:auto;max-height:calc(92vh - 130px)}
+.modal-f{display:flex;gap:.6rem;justify-content:flex-start;padding:1rem 1.25rem;border-top:1.5px solid var(--line)}
+.toasts{position:fixed;inset-inline:0;bottom:1rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;z-index:99;pointer-events:none}
+.toast{background:var(--primary);color:var(--on-primary);padding:.65rem 1.1rem;border-radius:var(--r);box-shadow:0 6px 22px rgba(0,0,0,.25);animation:pop .2s}
+.toast.err{background:var(--danger);color:#fff}
+@keyframes pop{from{transform:translateY(8px);opacity:0}}
+.footer{padding:2rem 1rem;text-align:center;color:var(--muted);font-size:.9rem}
+
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  .side{position:fixed;inset-block:0;inset-inline-start:0;width:270px;height:100%;z-index:20;transform:translateX(100%);transition:transform .2s;box-shadow:0 0 30px rgba(0,0,0,.3)}
+  .side.open{transform:none} .only-mobile{display:inline-grid}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
